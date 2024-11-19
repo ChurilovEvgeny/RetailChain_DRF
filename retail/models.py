@@ -10,7 +10,9 @@ class Contact(models.Model):
     country = models.CharField(max_length=100, verbose_name="Страна", default="")
     city = models.CharField(max_length=100, verbose_name="Город", default="")
     street = models.CharField(max_length=100, verbose_name="Улица", default="")
-    house_number = models.CharField(max_length=10, verbose_name="Номер дома", default="")
+    house_number = models.CharField(
+        max_length=10, verbose_name="Номер дома", default=""
+    )
 
     def __str__(self):
         return f"{self.email}: {self.country}, {self.city}, {self.street}, {self.house_number}"
@@ -39,8 +41,12 @@ class Chain(models.Model):
     products = models.ManyToManyField(Product, verbose_name="Продукты", **NULLABLE)
     contacts = models.ManyToManyField(Contact, verbose_name="Контакты", **NULLABLE)
     # contacts one to many (related name contacts)
-    supplier = models.ForeignKey("Chain", verbose_name="Поставщик", on_delete=models.SET_NULL, **NULLABLE)
-    dept = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Задолженность", default=0)
+    supplier = models.ForeignKey(
+        "Chain", verbose_name="Поставщик", on_delete=models.SET_NULL, **NULLABLE
+    )
+    dept = models.DecimalField(
+        max_digits=15, decimal_places=2, verbose_name="Задолженность", default=0
+    )
     creation_date = models.DateTimeField(auto_now=True, verbose_name="Дата создания")
 
     def __str__(self):

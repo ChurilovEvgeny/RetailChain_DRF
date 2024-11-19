@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from retail.models import Chain, Contact, Product
@@ -8,11 +9,14 @@ from retail.serializers import ChainSerializer, ContactSerializer, ProductSerial
 class ContactsViewSet(ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class ProductsViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+
 
 class ChainCreateAPIView(generics.CreateAPIView):
     """Создание документа"""
@@ -54,10 +58,8 @@ class ChainUpdateAPIView(generics.UpdateAPIView):
     queryset = Chain.objects.all()
     # permission_classes = [IsAuthenticated, IsOwner]
 
-
     def put(self, request, *args, **kwargs):
         return super().put(request, *args, **kwargs)
-
 
     def patch(self, request, *args, **kwargs):
         return super().patch(request, *args, **kwargs)
@@ -69,8 +71,5 @@ class ChainDeleteAPIView(generics.DestroyAPIView):
     queryset = Chain.objects.all()
     # permission_classes = [IsAuthenticated, IsOwner]
 
-
     def delete(self, request, *args, **kwargs):
         return super().delete(request, *args, **kwargs)
-
-

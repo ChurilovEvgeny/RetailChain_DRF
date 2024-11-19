@@ -2,7 +2,6 @@ from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
-from config import settings
 from users.models import User
 
 
@@ -17,7 +16,6 @@ class UserTestCaseAuthenticated(APITestCase):
     доступ к своим же данным"""
 
     def setUp(self) -> None:
-        settings.set_testing()
         self.user = User.objects.create(username="user")
         self.user1 = User.objects.create(username="user1")
         self.client.force_authenticate(user=self.user)
@@ -108,7 +106,6 @@ class UserTestCaseNotAuthenticated(APITestCase):
     """Данные тесты описывают не авторизованного пользователя"""
 
     def setUp(self) -> None:
-        settings.set_testing()
         self.user = User.objects.create(username="user")
 
     def test_user_create(self):
@@ -145,7 +142,6 @@ class UserTestCaseNotAuthenticated(APITestCase):
 class TestJWTTestCase(APITestCase):
 
     def setUp(self):
-        settings.set_testing()
         User.objects.create_user(username="user", password="pass")
 
     def test_jwt_token(self):
