@@ -36,22 +36,25 @@ class Product(models.Model):
         verbose_name_plural = "Продукты"
 
 
-class Chain(models.Model):
+class ChainLink(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название цепочки")
-    products = models.ManyToManyField(Product, verbose_name="Продукты", **NULLABLE)
-    contacts = models.ManyToManyField(Contact, verbose_name="Контакты", **NULLABLE)
-    # contacts one to many (related name contacts)
+    products = models.ManyToManyField(Product, verbose_name="Продукты", blank=True)
+    contacts = models.ManyToManyField(Contact, verbose_name="Контакты", blank=True)
     supplier = models.ForeignKey(
-        "Chain", verbose_name="Поставщик", on_delete=models.SET_NULL, **NULLABLE
+        "ChainLink", verbose_name="Поставщик", on_delete=models.SET_NULL, **NULLABLE
     )
     dept = models.DecimalField(
         max_digits=15, decimal_places=2, verbose_name="Задолженность", default=0
     )
     creation_date = models.DateTimeField(auto_now=True, verbose_name="Дата создания")
 
+    def reset_dept_and_save(self):
+        self.dept = 0
+        self.save()
+
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = "Цепочка"
-        verbose_name_plural = "Цепочки"
+        verbose_name = "Звено"
+        verbose_name_plural = "Звенья"

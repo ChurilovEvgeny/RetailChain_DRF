@@ -3,13 +3,13 @@ from rest_framework.routers import DefaultRouter
 
 from retail.apps import RetailConfig
 from retail.views import (
-    ChainCreateAPIView,
-    ChainListAPIView,
-    ChainRetrieveAPIView,
+    ChainLinkCreateAPIView,
+    ChainLinkListAPIView,
+    ChainLinkRetrieveAPIView,
     ContactsViewSet,
     ProductsViewSet,
-    ChainUpdateAPIView,
-    ChainDeleteAPIView,
+    ChainLinkUpdateAPIView,
+    ChainLinkDeleteAPIView,
 )
 
 app_name = RetailConfig.name
@@ -24,27 +24,27 @@ urlpatterns = (
     [
         path(
             "chain/create/",
-            ChainCreateAPIView.as_view(),
+            ChainLinkCreateAPIView.as_view(),
             name="chain-create",
         ),
         path(
             "chain/list/",
-            ChainListAPIView.as_view(),
+            ChainLinkListAPIView.as_view(),
             name="chain-list",
         ),
         path(
             "chain/<int:pk>/",
-            ChainRetrieveAPIView.as_view(),
+            ChainLinkRetrieveAPIView.as_view(),
             name="chain-retrieve",
         ),
         path(
             "chain/update/<int:pk>/",
-            ChainUpdateAPIView.as_view(),
+            ChainLinkUpdateAPIView.as_view(),
             name="chain-update",
         ),
         path(
             "chain/delete/<int:pk>/",
-            ChainDeleteAPIView.as_view(),
+            ChainLinkDeleteAPIView.as_view(),
             name="chain-delete",
         ),
     ]

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from retail.models import Chain, Contact, Product
+from retail.models import ChainLink, Contact, Product
 
 
 class ContactSerializer(serializers.ModelSerializer):
@@ -15,14 +15,14 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class ChainSerializer(serializers.ModelSerializer):
+class ChainLinkSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Chain
+        model = ChainLink
         fields = "__all__"
-        # read_only_fields = (
-        #     "id",
-        #     "created_at",
-        #     "title",
-        #     "is_confirmed",
-        #     "token",
-        # )
+
+
+class ChainLinkUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChainLink
+        fields = "__all__"
+        read_only_fields = ("dept",)

@@ -17,6 +17,24 @@ class ContactTestCaseAuthenticated(APITestCase):
     def setUp(self) -> None:
         self.contact_1 = Contact.objects.create(email="test_1@test.com")
         self.contact_2 = Contact.objects.create(email="test_2@test.com")
+        self.user1 = User.objects.create(username="user1", is_active=False)
+        self.client.force_authenticate(user=self.user1)
+
+    def test_contact_list(self):
+        response = self.client.get(reverse("retail:contacts-list"))
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.json()
+        self.assertEqual(data[0]["email"], self.contact_1.email)
+        self.assertEqual(data[1]["email"], self.contact_2.email)
+
+
+class ContactTestCaseAuthenticated(APITestCase):
+
+    def setUp(self) -> None:
+        self.contact_1 = Contact.objects.create(email="test_1@test.com")
+        self.contact_2 = Contact.objects.create(email="test_2@test.com")
         self.user1 = User.objects.create(username="user1")
         self.client.force_authenticate(user=self.user1)
 
